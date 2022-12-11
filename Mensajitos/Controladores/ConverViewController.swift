@@ -29,7 +29,7 @@ class ConverViewController: MessagesViewController {
     
     private let selfSender = Sender(photoURL: "",
                                senderId: "1",
-                               displayName: "Juan Diego")
+                               displayName: "Yair Herrera")
     
     override func viewDidLoad() {
         super.viewDidLoad()
