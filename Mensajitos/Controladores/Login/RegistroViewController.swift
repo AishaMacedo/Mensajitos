@@ -3,7 +3,7 @@
 //  Mensajitos
 //
 //  Created by Aisha Belen Macedo Zeballos on 10/12/22.
-//
+//@
 
 import UIKit
 import FirebaseAuth
@@ -13,6 +13,7 @@ class RegistroViewController: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
+        scrollView.backgroundColor = .systemGray2
         return scrollView
     }()
     
@@ -23,7 +24,7 @@ class RegistroViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.lightGray.cgColor
+        imageView.layer.borderColor = UIColor.black.cgColor
         return imageView
     }()
     

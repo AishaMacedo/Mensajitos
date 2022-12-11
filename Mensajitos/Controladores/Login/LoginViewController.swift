@@ -3,16 +3,18 @@
 //  Mensajitos
 //
 //  Created by Aisha Belen Macedo Zeballos on 10/12/22.
-//
+//@
 
 import UIKit
 import FirebaseAuth
+import FacebookLogin
 
 class LoginViewController: UIViewController {
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
+        scrollView.backgroundColor = .systemGray2
         return scrollView
     }()
     
@@ -65,6 +67,12 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    private let FbLoginButton: FBLoginButton = {
+        let button = FBLoginButton()
+        button.permissions = ["public_profile", "email"]
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Inicio de Sesión"
@@ -82,12 +90,15 @@ class LoginViewController: UIViewController {
         emailField.delegate = self
         passwordField.delegate = self
         
+        FbLoginButton.delegate = self
+        
         //        add subviews
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
         scrollView.addSubview(emailField)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(loginButton)
+        scrollView.addSubview(FbLoginButton)
     }
     
     override func viewDidLayoutSubviews() {
@@ -114,6 +125,12 @@ class LoginViewController: UIViewController {
                                    y: passwordField.bottom+10,
                                    width: scrollView.width-60,
                                    height: 52)
+        
+        FbLoginButton.frame = CGRect(x: 30,
+                                   y: loginButton.bottom+10,
+                                   width: scrollView.width-60,
+                                   height: 52)
+        FbLoginButton.frame.origin.y = loginButton.bottom+20
     }
     
     @objc private func loginButtonTapped(){
@@ -174,5 +191,67 @@ extension LoginViewController: UITextFieldDelegate{
         }
         
         return true
+    }
+}
+
+extension LoginViewController: LoginButtonDelegate {
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+//    no operativo
+    }
+    
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        guard let token = result?.token?.tokenString else {
+            print ("No se pudo iniciar sesión con Facebook")
+            return
+        }
+        
+        let facebookRequest = FacebookLogin.GraphRequest(graphPath: "Yo",
+                                                         parameters: ["fields": "email, name"],
+                                                         tokenString: token,
+                                                         version: nil,
+                                                         httpMethod: .get)
+        
+        facebookRequest.start(completionHandler: { _, result, error in
+            guard let result = result as? [String: Any],
+                    error == nil else {
+                        print("No se pudo realizar la solicitud")
+                        return
+            }
+     
+            guard let userName = result["name"] as? String,
+                  let email = result["email"] as? String else {
+                print("No se pudo obtener la información de Facebook")
+                return
+            }
+            let nameComponents = userName.components(separatedBy: " ")
+            guard nameComponents.count == 2 else {
+                return
+            }
+            let primerNom = nameComponents[0]
+            let apellido = nameComponents[1]
+            
+            DatabaseManager.shared.userExists(with: email, completion: { exists in
+                if !exists {
+                    DatabaseManager.shared.insertUser(with: ChatAppUser(primerNom: primerNom,
+                                                                        apellido: apellido,
+                                                                        email: email))
+                }
+            })
+            
+            let credential = FacebookAuthProvider.credential(withAccessToken: token)
+                FirebaseAuth.Auth.auth().signIn(with: credential, completion: { [weak self] authResult, error in
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    
+                    guard authResult != nil, error == nil else {
+                        print("Error al iniciar sesión, puede que las credenciales sean erroneas.")
+                        return
+                    }
+                    
+                    print("Se inició sesión con exito.")
+                    strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+                })
+        })
     }
 }
