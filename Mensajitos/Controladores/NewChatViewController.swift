@@ -6,24 +6,55 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class NewChatViewController: UIViewController {
 
+    private let spinner = JGProgressHUD()
+    
+    private let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "Buscar usuarios"
+        return searchBar
+    }()
+    
+    private let tableView: UITableView = {
+        let table = UITableView()
+        table.isHidden = true
+        table.register(UITableViewCell.self,
+                       forCellReuseIdentifier: "cell")
+        return table
+    }()
+    
+    private let sinResultadoLabel: UILabel = {
+        let label = UILabel()
+        label.isHidden = true
+        label.text = "Sin resultados"
+        label.textAlignment = . center
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 21, weight: .medium)
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
+        view.backgroundColor = .white
+        navigationController?.navigationBar.topItem?.titleView = searchBar
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancelar",
+                                                            style: .done,
+                                                            target: self,
+                                                            action: #selector(dismissSelf))
+        searchBar.becomeFirstResponder()
+    }
 
-        // Do any additional setup after loading the view.
+    @objc private func dismissSelf() {
+        dismiss(animated: true, completion: nil)
     }
     
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension NewChatViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     }
-    */
-
 }

@@ -8,8 +8,11 @@
 import UIKit
 import FirebaseAuth
 import FacebookLogin
+import JGProgressHUD
 
 class LoginViewController: UIViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -58,7 +61,7 @@ class LoginViewController: UIViewController {
     
     private let loginButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Registrarse", for: .normal)
+        button.setTitle("Iniciar Sesión", for: .normal)
         button.backgroundColor = .black
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 12
@@ -144,10 +147,16 @@ class LoginViewController: UIViewController {
             return
         }
         
+        spinner.show(in: view)
+        
         //Logeado con FireBase
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] authResult, error in
             guard let strongSelf = self else{
                 return
+            }
+            
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
             }
             
             guard let result = authResult, error == nil else {
