@@ -2,7 +2,7 @@
 //  ConverViewController.swift
 //  Mensajitos
 //
-//  Created by Aisha Belen Macedo Zeballos on 10/12/22.
+
 //@
 
 import UIKit
@@ -29,7 +29,7 @@ class ConverViewController: MessagesViewController {
     
     private let selfSender = Sender(photoURL: "",
                                senderId: "1",
-                               displayName: "Yair Herrera")
+                               displayName: "Juan Diego")
     
     override func viewDidLoad() {
         super.viewDidLoad()

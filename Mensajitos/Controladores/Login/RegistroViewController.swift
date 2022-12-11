@@ -2,7 +2,7 @@
 //  RegistroViewController.swift
 //  Mensajitos
 //
-//  Created by Aisha Belen Macedo Zeballos on 10/12/22.
+
 //@
 
 import UIKit
@@ -16,13 +16,13 @@ class RegistroViewController: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
-        scrollView.backgroundColor = .systemGray2
+        scrollView.backgroundColor = .systemYellow
         return scrollView
     }()
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.circle.fill")
+        imageView.image = UIImage(systemName: "person.badge.plus")
         imageView.tintColor = .black
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
@@ -42,7 +42,7 @@ class RegistroViewController: UIViewController {
         field.placeholder = "Primer nombre..."
         field.leftView = UIView(frame:CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .systemGray5
         return field
     }()
     
@@ -57,7 +57,7 @@ class RegistroViewController: UIViewController {
         field.placeholder = "Apellido..."
         field.leftView = UIView(frame:CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .systemGray5
         return field
     }()
     
@@ -72,7 +72,7 @@ class RegistroViewController: UIViewController {
         field.placeholder = "Ingrese su correo..."
         field.leftView = UIView(frame:CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .systemGray5
         return field
     }()
     
@@ -87,7 +87,7 @@ class RegistroViewController: UIViewController {
         field.placeholder = "Contraseña..."
         field.leftView = UIView(frame:CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .systemGray5
         field.isSecureTextEntry = true
         return field
     }()
@@ -95,7 +95,7 @@ class RegistroViewController: UIViewController {
     private let registroButton: UIButton = {
         let button = UIButton()
         button.setTitle("Registrarse", for: .normal)
-        button.backgroundColor = .red
+        button.backgroundColor = .systemBlue
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true

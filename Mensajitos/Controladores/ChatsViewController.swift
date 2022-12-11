@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Mensajitos
 //
-//  Created by Aisha Belen Macedo Zeballos on 10/12/22.
+
 //@
 
 import UIKit
@@ -86,7 +86,7 @@ extension ChatsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Hola"
+        cell.textLabel?.text = "Juan Diego"
         cell.accessoryType = .disclosureIndicator
         return cell
     }
@@ -95,7 +95,7 @@ extension ChatsViewController:  UITableViewDelegate, UITableViewDataSource{
         tableView.deselectRow(at: indexPath, animated: true)
         
         let vc = ConverViewController()
-        vc.title = "Yair Herrera"
+        vc.title = "Juan Diego"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }

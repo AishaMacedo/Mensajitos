@@ -2,7 +2,7 @@
 //  NewChatViewController.swift
 //  Mensajitos
 //
-//  Created by Aisha Belen Macedo Zeballos on 10/12/22.
+
 //
 
 import UIKit
@@ -15,6 +15,7 @@ class NewChatViewController: UIViewController {
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Buscar usuarios"
+        searchBar.backgroundColor = .systemYellow
         return searchBar
     }()
     

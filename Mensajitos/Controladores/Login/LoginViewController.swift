@@ -2,7 +2,6 @@
 //  LoginViewController.swift
 //  Mensajitos
 //
-//  Created by Aisha Belen Macedo Zeballos on 10/12/22.
 //@
 
 import UIKit
@@ -17,7 +16,7 @@ class LoginViewController: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
-        scrollView.backgroundColor = .systemGray2
+        scrollView.backgroundColor = .systemYellow
         return scrollView
     }()
     
@@ -62,7 +61,7 @@ class LoginViewController: UIViewController {
     private let loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("Iniciar Sesión", for: .normal)
-        button.backgroundColor = .black
+        button.backgroundColor = .systemBlue
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
